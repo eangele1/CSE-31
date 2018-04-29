@@ -47,7 +47,8 @@ main:
 	la $s1, original_list
 	addi $t9,$zero,25
 	
-	#messages to let user know that values entered are incorrect
+#MESSAGES TO LET USER KNOW THAT VALUES ENTERED ARE INVALID#
+
 	beqz $s0, NoZero
 	bltz $s0, negative
   	bgtu $s0, $t9, invalid_size
@@ -263,18 +264,13 @@ jloop:
 	# a0 = s3 = key = array[i]
 	move $a0, $s3
 	
-	# TODO 0
 	la $t0, ($s0) 
 	sll $t2, $s4, 2
 	# t3 = array[j]
 	add $t3, $t0, $t2
-	#move $a1, $t3 #TODO 0, value of array[j] as argument 
+	# value of array[j] as argument 
 	lw $a1, ($t3)
-		
-	# a0 = key
-	# a1 = array[j]
-	# if key < array then v0 = 1
-	# if key > array then v0 = 0
+
 	jal stringlt 
 		
 	move $t0, $v0
@@ -282,7 +278,7 @@ jloop:
 	beq $t0, $zero, jend
 		
 		
-	# nested loop begins!
+#NESTED LOOP BEGINS HERE#
 	
 	#TODO 0
 	la $t0, ($s0)
@@ -378,18 +374,26 @@ stringlt:
 bSearch:
 	#Your implementation of bSearch here
 	
-	move $s0, $a0 # address sorted list
-	move $s1, $a1 # size/right
-	move $s2, $a3 # search key
-	move $s3, $a2 # left
-	li $s5, 0 # mid
+	# address sorted list
+	move $s0, $a0 
+	# size/right
+	move $s1, $a1 
+	# search key
+	move $s2, $a3 
+	# left
+	move $s3, $a2 
+	# mid
+	li $s5, 0 
 	
 	#keeping size in line
 	addi $s1, $s1, -1 # size/right
 	
+	#checks if left is greater than right
 	bgt $s3, $s1, rightcheck
 	
 nopegoback:
+
+	#checks if right is less than left
 	blt $s1, $s3, bfalse 
 	
 	# mid = l + (r - l)/2
@@ -402,9 +406,10 @@ nopegoback:
 	add $t2, $s0, $t1
 	lw $t1, ($t2)
 	
+	#checks if array[mid] == search key
 	beq $t1, $s2, btrue
 	
-	# hacky code if l == 0 and r == 0 false
+	#if l == 0 and r == 0 then return false
 	li $t4, 0
 	li $t5, 0
 	
@@ -415,8 +420,10 @@ nopegoback:
 	li $t5, 2
 	beq $t4, $t5, bfalse
 	
-	bgt $t1, $s2, bsgt # jumps to greater than if t0 > t1
-	blt $t1, $s2, bslt # jumps to less than if t0 < t1
+	# jumps to greater than if t0 > t1
+	bgt $t1, $s2, bsgt
+	# jumps to less than if t0 < t1
+	blt $t1, $s2, bslt 
 	
 bsgt:
 	sub $a1, $s5, $s3
