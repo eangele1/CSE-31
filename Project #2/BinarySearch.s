@@ -221,7 +221,6 @@ arraycp:
 	#s1 is size
 	
 arraycploop:
-	#addi $t7, $t6, 1
 	#iterator is done when one less than size
 	beq $s1, $t6, arraycpend
 	
@@ -280,7 +279,6 @@ jloop:
 		
 #NESTED LOOP BEGINS HERE#
 	
-	#TODO 0
 	la $t0, ($s0)
 	sll $t2, $s4, 2 
 	add $t3, $t0, $t2
